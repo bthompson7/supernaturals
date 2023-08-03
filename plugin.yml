@@ -1,0 +1,11 @@
+name: Supernaturals
+version: 0.1 Alpha
+main: supernaturals.Supernaturals
+api-version: 1.20 # The version of the Bukkit API your plugin is built against
+description: A simple sample plugin for Minecraft
+author: YourName
+website: https://example.com
+depend: [] # Optional: Specify other plugins your plugin depends on
+softdepend: [] # Optional: Specify soft dependencies (won't prevent your plugin from loading if missing)
+load: STARTUP # Optional: Choose when the plugin should be loaded (STARTUP, POSTWORLD, etc.)
+
