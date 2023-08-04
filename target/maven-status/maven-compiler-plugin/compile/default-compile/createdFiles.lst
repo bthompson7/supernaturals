@@ -1,0 +1,6 @@
+supernaturals\Permission.class
+commands\base\BaseCommandExecutor.class
+recipes\Recipes.class
+commands\base\CommandManager.class
+supernaturals\Supernaturals.class
+commands\base\BaseCommand.class

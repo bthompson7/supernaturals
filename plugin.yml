@@ -8,4 +8,7 @@ website: https://example.com
 depend: [] # Optional: Specify other plugins your plugin depends on
 softdepend: [] # Optional: Specify soft dependencies (won't prevent your plugin from loading if missing)
 load: STARTUP # Optional: Choose when the plugin should be loaded (STARTUP, POSTWORLD, etc.)
+commands:
+  supernaturals:
+    aliases: [supernaturals, sn]
 
