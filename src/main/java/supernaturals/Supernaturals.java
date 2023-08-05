@@ -1,10 +1,12 @@
 package supernaturals;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import commands.PluginCommands;
 import commands.base.BaseCommandExecutor;
 import commands.base.CommandManager;
-import common.PluginCommands;
+import listeners.PlayerListener;
 import recipes.Recipes;
 
 /**
@@ -24,9 +26,10 @@ public class Supernaturals extends JavaPlugin {
 
 		// Register Commands:
 		getCommand("supernaturals").setExecutor(new BaseCommandExecutor());
-		
-		// register actual coma
 		CommandManager.register(PluginCommands.class);
+
+		// Register listeners
+		Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 
 
 		
