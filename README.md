@@ -2,6 +2,7 @@
 ## Spell ideas:
 
 - Passive ability?
+- Glinestone Peeble(yes, from Elden Ring): Produce offensive magic projectiles that attacks enemies from range.
 - FireRing: Cast a ring of fire around you.
 - Explode: Damage nearby players by 5. Radius of 5.
 - ShockHeal: Get healed 50%.
@@ -11,5 +12,6 @@
 ## Todo: 
 - Add UI
 - Ability to switch between spells
+- Leveling System
 - Add more spells
 
