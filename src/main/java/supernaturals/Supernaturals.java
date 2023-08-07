@@ -48,6 +48,7 @@ public class Supernaturals extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		getLogger().info("Supernaturals has been disabled!");
+		Bukkit.getScheduler().cancelTasks(plugin);
 	}
 
 }

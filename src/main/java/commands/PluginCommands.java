@@ -29,6 +29,7 @@ public class PluginCommands {
 			Supernaturals.players.put(snPlayer.getUuid(), snPlayer);
 			p.sendMessage(ChatColor.GREEN + "You are now a Mage!");
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + p.getName() + ChatColor.GREEN + " is now a Mage");
+			snPlayer.updateUI();
 		} else {
 			p.sendMessage(ChatColor.RED + "You are already a mage!");
 

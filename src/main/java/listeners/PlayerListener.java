@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 
+import net.md_5.bungee.api.ChatColor;
 import player.SNPlayer;
 import supernaturals.Supernaturals;
 
@@ -27,14 +28,12 @@ public class PlayerListener implements Listener {
 
 	@EventHandler
 	public void onPlayerLogin(final PlayerLoginEvent event) {
-		Supernaturals.plugin.getLogger().info("Player login event: " + event.getPlayer().getName());
 		Player player = event.getPlayer();
-
-	}
-
-	@EventHandler
-	public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
-
+		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
+		if(snPlayer != null) {
+			player.sendMessage("Welcome back to Supernaturals, " + player.getDisplayName());
+			snPlayer.updateUI();
+		}
 	}
 
 	@EventHandler
@@ -52,9 +51,8 @@ public class PlayerListener implements Listener {
 			// update mana
 			snPlayer.setCurrentMana(snPlayer.getCurrentMana() - SPELL_COST);
 			Supernaturals.players.put(player.getUniqueId(), snPlayer);
-			snPlayer.getPlayer().sendMessage("You have " + snPlayer.getCurrentMana() + " Mana");
-
-
+			snPlayer.getPlayer().sendMessage(ChatColor.RED + "-" + SPELL_COST + " Mana");
+			snPlayer.updateUI();
 		}
 	}
 

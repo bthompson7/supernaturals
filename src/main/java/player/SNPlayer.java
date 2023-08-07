@@ -7,6 +7,11 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Criteria;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 
 import supernaturals.Supernaturals;
 
@@ -24,7 +29,7 @@ public class SNPlayer {
 		this.name = p.getName();
 		this.setUuid(p.getUniqueId());
 		this.maxMana = 500;
-		this.currentMana = 500;
+		this.currentMana = 450;
 	}
 
 	public int getCurrentMana() {
@@ -43,10 +48,6 @@ public class SNPlayer {
 		this.name = name;
 	}
 
-	public void updateGUI() {
-
-	}
-
 	public static SNPlayer getPlayer(Player player) {
 		return Supernaturals.players.get(player.getUniqueId());
 	}
@@ -62,6 +63,25 @@ public class SNPlayer {
 	public Boolean isOffline() {
 		return !(isOnline());
 	}
+	
+	public void updateUI() {
+		Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+		if(scoreboard.getObjective("info") == null) {
+			scoreboard.registerNewObjective("info", Criteria.DUMMY, "");
+		}
+		
+		Objective info = scoreboard.getObjective("info");
+		info.setDisplaySlot(DisplaySlot.SIDEBAR);
+		info.setDisplayName("Mage");
+		Score currMana = info.getScore(ChatColor.BLUE + "Current Mana: ");
+		currMana.setScore(getCurrentMana());
+		
+		Score maxMana = info.getScore(ChatColor.BLUE + "Max Mana: ");
+		maxMana.setScore(getMaxMana());
+		getPlayer().setScoreboard(scoreboard);
+
+	}
+	
 	
 	public void sendMessage(String message) {
 		if (isOnline()) {
@@ -85,14 +105,6 @@ public class SNPlayer {
 		return players;
 	}
 	
-	public int getMana() {
-		return currentMana;
-	}
-
-	public void setMana(int mana) {
-		this.currentMana = mana;
-	}
-
 	public int getMaxMana() {
 		return maxMana;
 	}
