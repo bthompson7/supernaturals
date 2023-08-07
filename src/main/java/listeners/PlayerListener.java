@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,17 +22,25 @@ public class PlayerListener implements Listener {
 
 	private static final int SPELL_COST = 10;
 	
+	/**
+	 * TODO: wait until implement leveling, display level
+	 * 
+	 * @param event
+	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 
 	}
 
 	@EventHandler
-	public void onPlayerLogin(final PlayerLoginEvent event) {
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		Supernaturals.plugin.getLogger().info("Supernaturals has been enabled!");
+
 		Player player = event.getPlayer();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
+		Supernaturals.plugin.getLogger().info(String.valueOf(snPlayer != null));
+
 		if(snPlayer != null) {
-			player.sendMessage("Welcome back to Supernaturals, " + player.getDisplayName());
 			snPlayer.updateUI();
 		}
 	}
