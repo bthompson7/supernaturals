@@ -23,7 +23,7 @@ public class PlayerListener implements Listener {
 	private static final int SPELL_COST = 10;
 	
 	/**
-	 * TODO: wait until implement leveling, display level
+	 * TODO: wait until leveling is implemented, display level
 	 * 
 	 * @param event
 	 */
@@ -34,12 +34,9 @@ public class PlayerListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		Supernaturals.plugin.getLogger().info("Supernaturals has been enabled!");
-
 		Player player = event.getPlayer();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
-		Supernaturals.plugin.getLogger().info(String.valueOf(snPlayer != null));
-
+		
 		if(snPlayer != null) {
 			snPlayer.updateUI();
 		}
