@@ -24,13 +24,7 @@ public class Supernaturals extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		plugin = this;
-		
 		getLogger().info("Supernaturals has been enabled!");
-		
-		// Register recipes
-		Recipes.register(plugin);
-		getLogger().info("Registered recipes");
-
 		// Register Commands:
 		getCommand("supernaturals").setExecutor(new BaseCommandExecutor());
 		CommandManager.register(PluginCommands.class);
@@ -40,7 +34,7 @@ public class Supernaturals extends JavaPlugin {
 
 
 		// Register tasks
-		Bukkit.getScheduler().runTaskTimer(this, new ManaRegenTask(), 200, 200); // Every 10 seconds...
+		Bukkit.getScheduler().runTaskTimer(this, new ManaRegenTask(), 200, 200); // Every 10 seconds
 
 		
 	}

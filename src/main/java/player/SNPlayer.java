@@ -1,18 +1,24 @@
 package player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
+import spells.FireballSpell;
+import spells.SNSpell;
 import supernaturals.Supernaturals;
 
 /**
@@ -24,14 +30,44 @@ public class SNPlayer {
 	private int maxMana;
 	private String name;
 	private UUID uuid;
+	private Map<Integer, SNSpell> spellList = new HashMap<Integer, SNSpell>();
+	private int currentSpell;
+	private Inventory spellInventory;
 
+	/**
+	 * 
+	 * @param p the bukkit player
+	 */
 	public SNPlayer(Player p) {
 		this.name = p.getName();
-		this.setUuid(p.getUniqueId());
+		this.uuid = p.getUniqueId();
 		this.maxMana = 500;
 		this.currentMana = 450;
+		this.currentSpell = 0;
+		poulateSpellList();
+		createSpellInventory();
 	}
+	
+	private void createSpellInventory() {
+		spellInventory = Bukkit.createInventory(null, 9, "Spell List");
 
+		for (Map.Entry<Integer, SNSpell> entry : getSpellList().entrySet()) {
+			int key = entry.getKey();
+			SNSpell spell = entry.getValue();
+			ItemStack spellIcon = new ItemStack(spell.getSpellIcon());
+			spellInventory.setItem(key, spellIcon);
+		}
+
+	}
+	
+	private void poulateSpellList() {
+		spellList.put(0, new FireballSpell());
+
+	}
+	
+	public Map<Integer, SNSpell> getSpellList() {
+		return spellList;
+	}
 	public int getCurrentMana() {
 		return currentMana;
 	}
@@ -64,6 +100,11 @@ public class SNPlayer {
 		return !(isOnline());
 	}
 	
+	/**
+	 * 
+	 * Updates the players UI with info about current and max mana
+	 * 
+	 */
 	public void updateUI() {
 		Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 		if(scoreboard.getObjective("info") == null) {
@@ -119,5 +160,21 @@ public class SNPlayer {
 
 	public void setUuid(UUID uuid) {
 		this.uuid = uuid;
+	}
+
+	public int getCurrentSpell() {
+		return currentSpell;
+	}
+
+	public void setCurrentSpell(int currentSpell) {
+		this.currentSpell = currentSpell;
+	}
+
+	public Inventory getInventory() {
+		return spellInventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.spellInventory = inventory;
 	}
 }
