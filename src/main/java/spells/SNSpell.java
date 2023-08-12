@@ -1,6 +1,7 @@
 package spells;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 /**
  * 
@@ -17,11 +18,15 @@ public abstract class SNSpell {
 	public SNSpell() {
 		
 	}
-	
-	public void cast() {
-		
-	}
 
+	public void cast() {
+
+	}
+	
+	public void cast(Player player) {
+
+	}
+	
 	public int getSpellCost() {
 		return spellManaCost;
 	}

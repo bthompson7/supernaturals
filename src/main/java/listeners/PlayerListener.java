@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 
 import net.md_5.bungee.api.ChatColor;
 import player.SNPlayer;
+import spells.SNSpell;
 import supernaturals.Supernaturals;
 
 public class PlayerListener implements Listener {
@@ -55,17 +56,24 @@ public class PlayerListener implements Listener {
 		if (item != null) {
 
 			// player has wand
-			if (item.getType() == Material.BLAZE_ROD && item.getItemMeta().getDisplayName().contains("Magic Wand")
-					&& snPlayer.getCurrentMana() >= SPELL_COST) {
-				Fireball fireball = player.launchProjectile(Fireball.class);
-				fireball.setVelocity(player.getLocation().getDirection().multiply(2));
+			if (item.getType() == Material.BLAZE_ROD && item.getItemMeta().getDisplayName().contains("Magic Wand")) {
+				
 
-				// update mana
-				snPlayer.setCurrentMana(snPlayer.getCurrentMana() - SPELL_COST);
-				Supernaturals.players.put(player.getUniqueId(), snPlayer);
-				snPlayer.getPlayer().sendMessage(ChatColor.RED + "-" + SPELL_COST + " Mana");
-				snPlayer.updateUI();
+				SNSpell spell = snPlayer.getSpellList().get(snPlayer.getCurrentSpell());
+				Supernaturals.plugin.getLogger().info(String.valueOf(snPlayer.getCurrentSpell()));
 
+				if(snPlayer.getCurrentMana() >= spell.getSpellCost()) {
+					Supernaturals.plugin.getLogger().info(String.valueOf("cast spell"));
+
+					spell.cast(player);	
+					
+					// update mana
+					snPlayer.setCurrentMana(snPlayer.getCurrentMana() - spell.getSpellCost());
+					Supernaturals.players.put(player.getUniqueId(), snPlayer);
+					snPlayer.getPlayer().sendMessage(ChatColor.RED + "-" + spell.getSpellCost() + " Mana");
+					snPlayer.updateUI();
+				}
+				
 				// click spell book
 			} else if (item.getType() == Material.BOOK && item.getItemMeta().getDisplayName().contains("Spell Book")) {
 				event.setCancelled(true);
@@ -78,22 +86,25 @@ public class PlayerListener implements Listener {
 	/**
 	 * For when the player clicks an item in the custom iventory
 	 * 
-	 * @param event
+	 * @param event inventory click event
 	 */
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
-		if (!Objects.equals(event.getView().getTitle(), "Custom Inventory")) {
+		if (!Objects.equals(event.getView().getTitle(), "Spell List")) {
 			return;
 		}
 		Player player = (Player) event.getWhoClicked();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
-
-		event.setCancelled(true); // Prevent item moving/clicking in the inventory
-
 		int slot = event.getSlot();
-		if (event.getRawSlot() == 0) {
-			player.sendMessage("You clicked the custom item!");
+
+		
+		Supernaturals.plugin.getLogger().info(String.valueOf(slot < snPlayer.getSpellList().size()));
+		if(slot < snPlayer.getSpellList().size()) {
+			Supernaturals.plugin.getLogger().info("Slot: " + String.valueOf(slot));
+
+			snPlayer.setCurrentSpell(slot);
 		}
+	
 	}
 
 }

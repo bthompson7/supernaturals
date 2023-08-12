@@ -13,6 +13,7 @@ public class FireballSpell extends SNSpell {
 		setSpellIcon(Material.FIRE_CHARGE);
 	}
 	
+	@Override
 	public void cast(Player player) {
 		Fireball fireball = player.launchProjectile(Fireball.class);
 		fireball.setVelocity(player.getLocation().getDirection().multiply(2));
