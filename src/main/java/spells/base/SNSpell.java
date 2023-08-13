@@ -1,4 +1,4 @@
-package spell.base;
+package spells.base;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 
 import net.md_5.bungee.api.ChatColor;
 import player.SNPlayer;
-import spell.base.SNSpell;
+import spells.base.SNSpell;
 import supernaturals.Supernaturals;
 
 public class PlayerListener implements Listener {

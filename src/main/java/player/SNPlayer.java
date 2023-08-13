@@ -18,9 +18,9 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
-import spell.base.SNSpell;
 import spells.FireballSpell;
 import spells.LightningSpell;
+import spells.base.SNSpell;
 import supernaturals.Supernaturals;
 
 /**

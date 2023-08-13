@@ -3,7 +3,7 @@ package spells;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import spell.base.SNSpell;
+import spells.base.SNSpell;
 
 public class LightningSpell extends SNSpell {
 
