@@ -16,11 +16,6 @@ import supernaturals.Supernaturals;
 
 public class PluginCommands {
 
-	@BaseCommand(aliases = { "test" }, desc = "Test command", permission = Permission.NONE)
-	public void onTestCommand(CommandSender  sender, Command cmd, String commandLabel, String[] args) {
-		sender.sendMessage(CommandManager.getLight() + "Welcome to Supernaturals!");
-	}
-	
 	@BaseCommand(aliases = { "evolve" }, desc = "Evolve into a mage!", permission = Permission.COMMAND_EVOLVE)
 	public void onEvolveCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		SNPlayer getPlayer = SNPlayer.getPlayer((Player) sender);
@@ -41,7 +36,23 @@ public class PluginCommands {
 			commandSender.sendMessage(ChatColor.RED + "You are already a mage!");
 
 		}
-
 	}
 
+	@BaseCommand(aliases = { "newitems" }, desc = "Gives you new items", permission = Permission.COMMAND_NEW_ITEMS)
+	public void onNewItemsCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		SNPlayer getPlayer = SNPlayer.getPlayer((Player) sender);
+		Player commandSender = (Player) sender;
+		if (getPlayer != null) {
+			ItemStack magicWand = Recipes.createWand();
+			ItemStack spellBook = Recipes.createSpellBook();
+			commandSender.getInventory().addItem(magicWand);
+			commandSender.getInventory().addItem(spellBook);
+			commandSender.sendMessage(ChatColor.GREEN + "You have recieved a new wand and spellbook!");
+
+		} else {
+			commandSender.sendMessage(ChatColor.RED + "You must be a mage to run this command!");
+
+		}
+	}
+	
 }

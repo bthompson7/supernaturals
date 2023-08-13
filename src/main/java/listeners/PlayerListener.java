@@ -18,12 +18,10 @@ import org.bukkit.inventory.ItemStack;
 
 import net.md_5.bungee.api.ChatColor;
 import player.SNPlayer;
-import spells.SNSpell;
+import spell.base.SNSpell;
 import supernaturals.Supernaturals;
 
 public class PlayerListener implements Listener {
-
-	private static final int SPELL_COST = 10;
 
 	/**
 	 * TODO: wait until leveling is implemented, display level
@@ -47,44 +45,30 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		Action action = event.getAction();
-		Block block = event.getClickedBlock();
-
 		ItemStack item = player.getInventory().getItemInMainHand();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
 
 		if (item != null) {
 
-			// player has wand
 			if (item.getType() == Material.BLAZE_ROD && item.getItemMeta().getDisplayName().contains("Magic Wand")) {
-				
-
 				SNSpell spell = snPlayer.getSpellList().get(snPlayer.getCurrentSpell());
-				Supernaturals.plugin.getLogger().info(String.valueOf(snPlayer.getCurrentSpell()));
 
 				if(snPlayer.getCurrentMana() >= spell.getSpellCost()) {
-					Supernaturals.plugin.getLogger().info(String.valueOf("cast spell"));
-
 					spell.cast(player);	
-					
-					// update mana
 					snPlayer.setCurrentMana(snPlayer.getCurrentMana() - spell.getSpellCost());
 					Supernaturals.players.put(player.getUniqueId(), snPlayer);
 					snPlayer.getPlayer().sendMessage(ChatColor.RED + "-" + spell.getSpellCost() + " Mana");
 					snPlayer.updateUI();
 				}
 				
-				// click spell book
 			} else if (item.getType() == Material.BOOK && item.getItemMeta().getDisplayName().contains("Spell Book")) {
-				event.setCancelled(true);
 				player.openInventory(snPlayer.getInventory());
 			}
 		}
 	}
 
-	
 	/**
-	 * For when the player clicks an item in the custom iventory
+	 * For when the player clicks an item in the custom inventory
 	 * 
 	 * @param event inventory click event
 	 */
@@ -93,15 +77,14 @@ public class PlayerListener implements Listener {
 		if (!Objects.equals(event.getView().getTitle(), "Spell List")) {
 			return;
 		}
+		
+		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
 		int slot = event.getSlot();
-
 		
-		Supernaturals.plugin.getLogger().info(String.valueOf(slot < snPlayer.getSpellList().size()));
 		if(slot < snPlayer.getSpellList().size()) {
-			Supernaturals.plugin.getLogger().info("Slot: " + String.valueOf(slot));
-
+			snPlayer.sendMessage("Current spell set to " + snPlayer.getSpellList().get(slot).getSpellName());
 			snPlayer.setCurrentSpell(slot);
 		}
 	

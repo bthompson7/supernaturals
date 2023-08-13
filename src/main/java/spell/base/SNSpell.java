@@ -1,7 +1,13 @@
-package spells;
+package spell.base;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.util.BlockIterator;
+import org.bukkit.util.Vector;
+
+import supernaturals.Supernaturals;
 
 /**
  * 
@@ -24,6 +30,27 @@ public abstract class SNSpell {
 	}
 	
 	public void cast(Player player) {
+
+	}
+	
+	/**
+	 * Gets the players cursor location
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public Location getCursorLocation(Player player) {
+		BlockIterator blockIterator = new BlockIterator(player, 50);
+		Block lastBlock = null;
+
+		while (blockIterator.hasNext()) {
+			lastBlock = blockIterator.next();
+			if (!lastBlock.getType().isAir()) {
+				break;
+			}
+		}
+		
+		return lastBlock.getLocation();
 
 	}
 	

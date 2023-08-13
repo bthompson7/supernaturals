@@ -4,12 +4,14 @@ import org.bukkit.Material;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 
+import spell.base.SNSpell;
+
 public class FireballSpell extends SNSpell {
 	
 	public FireballSpell() {
-		setSpellName("FireBall");
+		setSpellName("Fireball");
 		setSpellDesc("Cast a fireball at your enemy!");
-		setSpellCost(5);
+		setSpellCost(1);
 		setSpellIcon(Material.FIRE_CHARGE);
 	}
 	

@@ -22,7 +22,7 @@ public class ManaRegenTask implements Runnable {
 				p.save(p.getUuid(), p);		
 			}else if(diffFromMax < MANA_REGEN_AMOUNT && diffFromMax > 0) {
 				p.setCurrentMana(p.getCurrentMana() + diffFromMax);
-				p.getPlayer().sendMessage(ChatColor.GREEN + "+" + MANA_REGEN_AMOUNT+ " Mana");
+				p.getPlayer().sendMessage(ChatColor.GREEN + "+" + diffFromMax + " Mana");
 				p.updateUI();
 				p.save(p.getUuid(), p);	
 			}

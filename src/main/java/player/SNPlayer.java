@@ -11,14 +11,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
+import spell.base.SNSpell;
 import spells.FireballSpell;
-import spells.SNSpell;
+import spells.LightningSpell;
 import supernaturals.Supernaturals;
 
 /**
@@ -28,7 +30,7 @@ public class SNPlayer {
 
 	private int currentMana;
 	private int maxMana;
-	private String name;
+	private String playerName;
 	private UUID uuid;
 	private Map<Integer, SNSpell> spellList = new HashMap<Integer, SNSpell>();
 	private int currentSpell;
@@ -39,7 +41,7 @@ public class SNPlayer {
 	 * @param p the bukkit player
 	 */
 	public SNPlayer(Player p) {
-		this.name = p.getName();
+		this.playerName = p.getName();
 		this.uuid = p.getUniqueId();
 		this.maxMana = 500;
 		this.currentMana = 450;
@@ -55,6 +57,9 @@ public class SNPlayer {
 			int key = entry.getKey();
 			SNSpell spell = entry.getValue();
 			ItemStack spellIcon = new ItemStack(spell.getSpellIcon());
+			ItemMeta spellIconMeta = spellIcon.getItemMeta();
+			spellIconMeta.setDisplayName(spell.getSpellName() + ", " + spell.getSpellDesc());
+			spellIcon.setItemMeta(spellIconMeta);
 			spellInventory.setItem(key, spellIcon);
 		}
 
@@ -62,7 +67,7 @@ public class SNPlayer {
 	
 	private void poulateSpellList() {
 		spellList.put(0, new FireballSpell());
-
+		spellList.put(1, new LightningSpell());
 	}
 	
 	public Map<Integer, SNSpell> getSpellList() {
@@ -77,11 +82,11 @@ public class SNPlayer {
 	}
 
 	public String getName() {
-		return name;
+		return playerName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.playerName = name;
 	}
 
 	public static SNPlayer getPlayer(Player player) {
@@ -89,7 +94,7 @@ public class SNPlayer {
 	}
 
 	public Player getPlayer() {
-		return Bukkit.getPlayerExact(name);
+		return Bukkit.getPlayerExact(playerName);
 	}
 
 	public Boolean isOnline() {

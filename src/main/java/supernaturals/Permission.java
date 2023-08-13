@@ -8,6 +8,7 @@ public enum Permission {
 	COMMAND_MANA("commands.mana"),
 	COMMAND_LEVEL("commands.level"),
 	COMMAND_EVOLVE("commands.evolve"),
+	COMMAND_NEW_ITEMS("command.newitems"),
 
 	// mod commands
 	COMMAND_MODMANA("commands.modmana"),
