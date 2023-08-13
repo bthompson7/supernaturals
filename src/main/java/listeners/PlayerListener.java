@@ -3,13 +3,10 @@ package listeners;
 import java.util.Objects;
 
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -37,9 +34,12 @@ public class PlayerListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
-		if (snPlayer != null) {
-			snPlayer.updateUI();
+
+		if (snPlayer == null) {
+			return;
 		}
+
+		snPlayer.updateUI();
 	}
 
 	@EventHandler
@@ -48,23 +48,25 @@ public class PlayerListener implements Listener {
 		ItemStack item = player.getInventory().getItemInMainHand();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
 
-		if (item != null) {
-
-			if (item.getType() == Material.BLAZE_ROD && item.getItemMeta().getDisplayName().contains("Magic Wand")) {
-				SNSpell spell = snPlayer.getSpellList().get(snPlayer.getCurrentSpell());
-
-				if(snPlayer.getCurrentMana() >= spell.getSpellCost()) {
-					spell.cast(player);	
-					snPlayer.setCurrentMana(snPlayer.getCurrentMana() - spell.getSpellCost());
-					Supernaturals.players.put(player.getUniqueId(), snPlayer);
-					snPlayer.getPlayer().sendMessage(ChatColor.RED + "-" + spell.getSpellCost() + " Mana");
-					snPlayer.updateUI();
-				}
-				
-			} else if (item.getType() == Material.BOOK && item.getItemMeta().getDisplayName().contains("Spell Book")) {
-				player.openInventory(snPlayer.getInventory());
-			}
+		if (item == null) {
+			return;
 		}
+
+		if (item.getType() == Material.BLAZE_ROD && item.getItemMeta().getDisplayName().contains("Magic Wand")) {
+			SNSpell spell = snPlayer.getSpellList().get(snPlayer.getCurrentSpell());
+
+			if (snPlayer.getCurrentMana() >= spell.getSpellCost()) {
+				spell.cast(player);
+				snPlayer.setCurrentMana(snPlayer.getCurrentMana() - spell.getSpellCost());
+				Supernaturals.players.put(player.getUniqueId(), snPlayer);
+				snPlayer.getPlayer().sendMessage(ChatColor.RED + "-" + spell.getSpellCost() + " Mana");
+				snPlayer.updateUI();
+			}
+
+		} else if (item.getType() == Material.BOOK && item.getItemMeta().getDisplayName().contains("Spell Book")) {
+			player.openInventory(snPlayer.getInventory());
+		}
+		
 	}
 
 	/**
@@ -77,17 +79,17 @@ public class PlayerListener implements Listener {
 		if (!Objects.equals(event.getView().getTitle(), "Spell List")) {
 			return;
 		}
-		
+
 		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
 		int slot = event.getSlot();
-		
-		if(slot < snPlayer.getSpellList().size()) {
+
+		if (slot < snPlayer.getSpellList().size()) {
 			snPlayer.sendMessage("Current spell set to " + snPlayer.getSpellList().get(slot).getSpellName());
 			snPlayer.setCurrentSpell(slot);
 		}
-	
+
 	}
 
 }

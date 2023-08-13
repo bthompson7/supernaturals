@@ -33,7 +33,7 @@ public class SNPlayer {
 	private String playerName;
 	private UUID uuid;
 	private Map<Integer, SNSpell> spellList = new HashMap<Integer, SNSpell>();
-	private int currentSpell;
+	private int currentSpellNumber;
 	private Inventory spellInventory;
 
 	/**
@@ -45,7 +45,7 @@ public class SNPlayer {
 		this.uuid = p.getUniqueId();
 		this.maxMana = 500;
 		this.currentMana = 450;
-		this.currentSpell = 0;
+		this.currentSpellNumber = 0;
 		poulateSpellList();
 		createSpellInventory();
 	}
@@ -62,7 +62,6 @@ public class SNPlayer {
 			spellIcon.setItemMeta(spellIconMeta);
 			spellInventory.setItem(key, spellIcon);
 		}
-
 	}
 	
 	private void poulateSpellList() {
@@ -168,11 +167,11 @@ public class SNPlayer {
 	}
 
 	public int getCurrentSpell() {
-		return currentSpell;
+		return currentSpellNumber;
 	}
 
-	public void setCurrentSpell(int currentSpell) {
-		this.currentSpell = currentSpell;
+	public void setCurrentSpell(int currentSpellNumber) {
+		this.currentSpellNumber = currentSpellNumber;
 	}
 
 	public Inventory getInventory() {

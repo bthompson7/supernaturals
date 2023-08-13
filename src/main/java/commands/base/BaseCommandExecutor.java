@@ -31,9 +31,6 @@ public class BaseCommandExecutor implements CommandExecutor, TabCompleter {
 			return true;
 		}
 	
-
-		Supernaturals.plugin.getLogger().info("args size: " + args.length);
-
 		Supernaturals.plugin.getLogger().info(args[0]);
 		if(CommandManager.getCommand(args[0]) == null) {
 			sender.sendMessage(CommandManager.getError() + "The specified command was not found!");
@@ -43,7 +40,6 @@ public class BaseCommandExecutor implements CommandExecutor, TabCompleter {
 		BaseCommand command = CommandManager.getCommand(args[0]);
 		Object[] commandArgs = ArrayUtils.remove(args, 0);
 
-		
 		if(sender instanceof Player && !(command.player())) {
 			sender.sendMessage(CommandManager.getError() + "This command cannot be ran as a player!");
 			return true;

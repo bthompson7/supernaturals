@@ -90,7 +90,7 @@ public class CommandManager {
 	
 	public static void execute(BaseCommand command, Object... args) {
 		try {
-			commands.get(command).invoke(commands.get(command).getDeclaringClass().newInstance(), args);
+			commands.get(command).invoke(commands.get(command).getDeclaringClass().getDeclaredConstructor().newInstance(), args);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
