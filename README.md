@@ -10,8 +10,8 @@
 - Speed: Gain 20% speed for 30 seconds.
 
 ## Todo: 
-- Add UI
-- Ability to switch between spells
-- Leveling System
+- <s>Add UI</s>
+- <s>Ability to switch between spells</s>
 - Add more spells
+- Leveling System
 
