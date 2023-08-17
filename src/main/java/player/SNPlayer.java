@@ -1,10 +1,6 @@
 package player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -110,7 +106,7 @@ public class SNPlayer {
 	 * 
 	 */
 	public void updateUI() {
-		Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+		Scoreboard scoreboard = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
 		if(scoreboard.getObjective("info") == null) {
 			scoreboard.registerNewObjective("info", Criteria.DUMMY, "");
 		}

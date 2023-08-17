@@ -15,7 +15,7 @@ import recipes.Recipes;
 import tasks.ManaRegenTask;
 
 /**
- * Entry point for supernaturals plugin, test from intellij/git
+ * Entry point for supernaturals plugin
  */
 public class Supernaturals extends JavaPlugin {
 	public static Supernaturals plugin = null;
