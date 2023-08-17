@@ -15,7 +15,7 @@ import recipes.Recipes;
 import tasks.ManaRegenTask;
 
 /**
- * Entry point for supernaturals plugin
+ * Entry point for supernaturals plugin, test from intellij/git
  */
 public class Supernaturals extends JavaPlugin {
 	public static Supernaturals plugin = null;
@@ -35,8 +35,6 @@ public class Supernaturals extends JavaPlugin {
 
 		// Register tasks
 		Bukkit.getScheduler().runTaskTimer(this, new ManaRegenTask(), 200, 200); // Every 10 seconds
-
-		
 	}
 
 	@Override
