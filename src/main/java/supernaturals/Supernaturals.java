@@ -11,7 +11,6 @@ import commands.base.BaseCommandExecutor;
 import commands.base.CommandManager;
 import listeners.PlayerListener;
 import player.SNPlayer;
-import recipes.Recipes;
 import tasks.ManaRegenTask;
 
 /**
@@ -25,15 +24,15 @@ public class Supernaturals extends JavaPlugin {
 	public void onEnable() {
 		plugin = this;
 		getLogger().info("Supernaturals has been enabled!");
-		// Register Commands:
+
+		// Register commands:
 		getCommand("supernaturals").setExecutor(new BaseCommandExecutor());
 		CommandManager.register(PluginCommands.class);
 
-		// Register listeners
+		// Register listeners:
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 
-
-		// Register tasks
+		// Register tasks:
 		Bukkit.getScheduler().runTaskTimer(this, new ManaRegenTask(), 200, 200); // Every 10 seconds
 	}
 
