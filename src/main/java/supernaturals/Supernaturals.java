@@ -3,6 +3,7 @@ package supernaturals;
 import java.util.HashMap;
 import java.util.UUID;
 
+import listeners.WorldListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,6 +32,7 @@ public class Supernaturals extends JavaPlugin {
 
 		// Register listeners:
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+		Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
 
 		// Register tasks:
 		Bukkit.getScheduler().runTaskTimer(this, new ManaRegenTask(), 200, 200); // Every 10 seconds

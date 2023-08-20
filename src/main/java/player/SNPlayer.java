@@ -1,5 +1,6 @@
 package player;
 
+import java.nio.file.attribute.PosixFileAttributes;
 import java.util.*;
 
 import org.bukkit.Bukkit;
@@ -16,6 +17,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import spells.FireballSpell;
 import spells.LightningSpell;
+import spells.PoisonMist;
 import spells.base.SNSpell;
 import supernaturals.Supernaturals;
 
@@ -63,6 +65,7 @@ public class SNPlayer {
 	private void poulateSpellList() {
 		spellList.put(0, new FireballSpell());
 		spellList.put(1, new LightningSpell());
+		spellList.put(2, new PoisonMist());
 	}
 	
 	public Map<Integer, SNSpell> getSpellList() {
@@ -120,10 +123,8 @@ public class SNPlayer {
 		Score maxMana = info.getScore(ChatColor.BLUE + "Max Mana: ");
 		maxMana.setScore(getMaxMana());
 		getPlayer().setScoreboard(scoreboard);
-
 	}
-	
-	
+
 	public void sendMessage(String message) {
 		if (isOnline()) {
 			getPlayer().sendMessage(message);
