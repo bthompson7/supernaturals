@@ -53,7 +53,7 @@ public class PlayerListener implements Listener {
 		}
 
 		if (item.getType() == Material.BLAZE_ROD && item.getItemMeta().getDisplayName().contains("Magic Wand")) {
-			SNSpell spell = snPlayer.getSpellList().get(snPlayer.getCurrentSpell());
+			SNSpell spell = snPlayer.getSpellList().get(snPlayer.getCurrentSpellNumber());
 
 			if (snPlayer.getCurrentMana() >= spell.getSpellCost()) {
 				spell.cast(player);
@@ -79,15 +79,23 @@ public class PlayerListener implements Listener {
 		if (!Objects.equals(event.getView().getTitle(), "Spell List")) {
 			return;
 		}
-
 		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
+
+		if(snPlayer == null){
+			return;
+		}
+
 		int slot = event.getSlot();
 
 		if (slot < snPlayer.getSpellList().size()) {
-			snPlayer.sendMessage("Current spell set to " + snPlayer.getSpellList().get(slot).getSpellName());
-			snPlayer.setCurrentSpell(slot);
+			String currentSpellName = snPlayer.getSpellList().get(slot).getSpellName();
+			snPlayer.sendMessage(ChatColor.GOLD + currentSpellName + " Selected ");
+			snPlayer.setCurrentSpellNumber(slot);
+			snPlayer.setCurrentSpellName(currentSpellName);
+			snPlayer.updateUI();
+			snPlayer.save(snPlayer.getUuid(), snPlayer);
 		}
 
 	}

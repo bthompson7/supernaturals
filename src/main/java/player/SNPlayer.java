@@ -1,6 +1,5 @@
 package player;
 
-import java.nio.file.attribute.PosixFileAttributes;
 import java.util.*;
 
 import org.bukkit.Bukkit;
@@ -9,14 +8,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scoreboard.Criteria;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.*;
 
-import spells.FireballSpell;
-import spells.LightningSpell;
+import spells.Fireball;
+import spells.Heal;
+import spells.Lightning;
 import spells.PoisonMist;
 import spells.base.SNSpell;
 import supernaturals.Supernaturals;
@@ -28,10 +24,12 @@ public class SNPlayer {
 
 	private int currentMana;
 	private int maxMana;
+	private int currentLevel = 1;
 	private String playerName;
 	private UUID uuid;
 	private Map<Integer, SNSpell> spellList = new HashMap<Integer, SNSpell>();
 	private int currentSpellNumber;
+	private String currentSpellName;
 	private Inventory spellInventory;
 
 	/**
@@ -44,7 +42,7 @@ public class SNPlayer {
 		this.maxMana = 500;
 		this.currentMana = 450;
 		this.currentSpellNumber = 0;
-		poulateSpellList();
+		populateSpellList();
 		createSpellInventory();
 	}
 	
@@ -62,10 +60,12 @@ public class SNPlayer {
 		}
 	}
 	
-	private void poulateSpellList() {
-		spellList.put(0, new FireballSpell());
-		spellList.put(1, new LightningSpell());
+	private void populateSpellList() {
+		spellList.put(0, new Fireball());
+		spellList.put(1, new Lightning());
 		spellList.put(2, new PoisonMist());
+		spellList.put(3, new Heal());
+
 	}
 	
 	public Map<Integer, SNSpell> getSpellList() {
@@ -105,23 +105,26 @@ public class SNPlayer {
 	
 	/**
 	 * 
-	 * Updates the players UI with info about current and max mana
+	 * Updates the players UI with info about current and max mana, and spells
 	 * 
 	 */
 	public void updateUI() {
 		Scoreboard scoreboard = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
-		if(scoreboard.getObjective("info") == null) {
-			scoreboard.registerNewObjective("info", Criteria.DUMMY, "");
+		if(scoreboard.getObjective("playerInfo") == null) {
+			scoreboard.registerNewObjective("playerInfo", Criteria.DUMMY, "");
 		}
 		
-		Objective info = scoreboard.getObjective("info");
-		info.setDisplaySlot(DisplaySlot.SIDEBAR);
-		info.setDisplayName("Mage");
-		Score currMana = info.getScore(ChatColor.BLUE + "Current Mana: ");
+		Objective playerInfo = scoreboard.getObjective("playerInfo");
+		playerInfo.setDisplaySlot(DisplaySlot.SIDEBAR);
+		playerInfo.setDisplayName("Mage - " +  ChatColor.GOLD + getCurrentSpellName());
+		Score currMana = playerInfo.getScore(ChatColor.BLUE + "Current Mana: ");
 		currMana.setScore(getCurrentMana());
 		
-		Score maxMana = info.getScore(ChatColor.BLUE + "Max Mana: ");
+		Score maxMana = playerInfo.getScore(ChatColor.BLUE + "Max Mana: ");
 		maxMana.setScore(getMaxMana());
+		Score currentLevel = playerInfo.getScore(ChatColor.BLUE + "Level: ");
+		currentLevel.setScore(getCurrentLevel());
+
 		getPlayer().setScoreboard(scoreboard);
 	}
 
@@ -163,11 +166,11 @@ public class SNPlayer {
 		this.uuid = uuid;
 	}
 
-	public int getCurrentSpell() {
+	public int getCurrentSpellNumber() {
 		return currentSpellNumber;
 	}
 
-	public void setCurrentSpell(int currentSpellNumber) {
+	public void setCurrentSpellNumber(int currentSpellNumber) {
 		this.currentSpellNumber = currentSpellNumber;
 	}
 
@@ -178,4 +181,22 @@ public class SNPlayer {
 	public void setInventory(Inventory inventory) {
 		this.spellInventory = inventory;
 	}
+
+	public String getCurrentSpellName() {
+		return currentSpellName;
+	}
+
+	public void setCurrentSpellName(String currentSpellName) {
+		this.currentSpellName = currentSpellName;
+	}
+
+	public int getCurrentLevel() {
+		return currentLevel;
+	}
+
+	public void setCurrentLevel(int currentLevel) {
+		this.currentLevel = currentLevel;
+	}
+
+
 }

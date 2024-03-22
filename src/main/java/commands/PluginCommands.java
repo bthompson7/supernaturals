@@ -47,7 +47,7 @@ public class PluginCommands {
 			ItemStack spellBook = Recipes.createSpellBook();
 			commandSender.getInventory().addItem(magicWand);
 			commandSender.getInventory().addItem(spellBook);
-			commandSender.sendMessage(ChatColor.GREEN + "You have recieved a new wand and spellbook!");
+			commandSender.sendMessage(ChatColor.GREEN + "You have received a new wand and spellbook!");
 
 		} else {
 			commandSender.sendMessage(ChatColor.RED + "You must be a mage to run this command!");

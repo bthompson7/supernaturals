@@ -39,7 +39,7 @@ public abstract class SNSpell {
 	 * @param player
 	 * @return
 	 */
-	public Location getCursorLocation(Player player) {
+	public static Location getCursorLocation(Player player) {
 		BlockIterator blockIterator = new BlockIterator(player, 50);
 		Block lastBlock = null;
 
@@ -49,7 +49,7 @@ public abstract class SNSpell {
 				break;
 			}
 		}
-		
+
 		return lastBlock.getLocation();
 
 	}

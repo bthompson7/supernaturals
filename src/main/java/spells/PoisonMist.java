@@ -19,6 +19,6 @@ public class PoisonMist extends SNSpell {
 
     @Override
     public void cast(Player player){
-        ThrownPotion potion = player.launchProjectile(ThrownPotion.class);
+        player.launchProjectile(ThrownPotion.class);
     }
 }

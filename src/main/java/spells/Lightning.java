@@ -5,9 +5,9 @@ import org.bukkit.entity.Player;
 
 import spells.base.SNSpell;
 
-public class LightningSpell extends SNSpell {
+public class Lightning extends SNSpell {
 
-	public LightningSpell() {
+	public Lightning() {
 		setSpellName("Lightning");
 		setSpellDesc("Strike down your foes!");
 		setSpellCost(5);

@@ -4,8 +4,6 @@ import player.SNPlayer;
 import org.bukkit.ChatColor;
 
 public class ManaRegenTask implements Runnable {
-
-
     private static int MANA_REGEN_AMOUNT = 10;
     public void run() {
         for(SNPlayer p : SNPlayer.getOnlinePlayers()) {
