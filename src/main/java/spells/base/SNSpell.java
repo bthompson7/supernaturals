@@ -49,9 +49,7 @@ public abstract class SNSpell {
 				break;
 			}
 		}
-
 		return lastBlock.getLocation();
-
 	}
 	
 	public int getSpellCost() {

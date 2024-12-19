@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import spells.base.SNSpell;
 
 public class Heal extends SNSpell {
-    private double HEALTH_GAIN_AMOUNT = 3.0;
-    private double MAX_HEALTH = 20.0;
+    private final double HEALTH_GAIN_AMOUNT = 3.0;
+    private final double MAX_HEALTH = 20.0;
     public Heal(){
         setSpellName("Heal");
         setSpellDesc("Heal yourself!");
@@ -15,8 +15,7 @@ public class Heal extends SNSpell {
     }
     @Override
     public void cast(Player player){
-        double healthDiff = MAX_HEALTH - player.getHealth();
-        System.out.println(healthDiff);
+        double healthDiff = Math.round(MAX_HEALTH - player.getHealth());
 
         if(player.getHealth() < MAX_HEALTH && healthDiff >= HEALTH_GAIN_AMOUNT){
             player.setHealth(player.getHealth() + HEALTH_GAIN_AMOUNT);

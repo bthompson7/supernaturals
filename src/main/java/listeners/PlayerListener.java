@@ -20,14 +20,16 @@ import supernaturals.Supernaturals;
 
 public class PlayerListener implements Listener {
 
-	/**
-	 * TODO: wait until leveling is implemented, display level
-	 * 
-	 * @param event
-	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
+		Player player = event.getPlayer();
+		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
 
+		if (snPlayer == null) {
+			return;
+		}
+
+		event.setFormat("<" + player.getDisplayName() + ChatColor.BLUE  + " [Level " + snPlayer.getCurrentLevel() + "] " + ChatColor.WHITE + "> " + event.getMessage());
 	}
 
 	@EventHandler
@@ -48,7 +50,7 @@ public class PlayerListener implements Listener {
 		ItemStack item = player.getInventory().getItemInMainHand();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
 
-		if (item == null) {
+		if (snPlayer == null) {
 			return;
 		}
 

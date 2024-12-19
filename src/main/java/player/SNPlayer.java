@@ -19,6 +19,8 @@ import supernaturals.Supernaturals;
 
 /**
  * Class that represents a supernaturals player
+ *
+ * TODO: ORM here?
  */
 public class SNPlayer {
 
@@ -27,10 +29,11 @@ public class SNPlayer {
 	private int currentLevel = 1;
 	private String playerName;
 	private UUID uuid;
-	private Map<Integer, SNSpell> spellList = new HashMap<Integer, SNSpell>();
 	private int currentSpellNumber;
 	private String currentSpellName;
 	private Inventory spellInventory;
+	private Map<Integer, SNSpell> spellList = new HashMap<Integer, SNSpell>();
+
 
 	/**
 	 * 

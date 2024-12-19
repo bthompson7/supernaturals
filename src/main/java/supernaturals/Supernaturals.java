@@ -19,7 +19,7 @@ import tasks.ManaRegenTask;
  */
 public class Supernaturals extends JavaPlugin {
 	public static Supernaturals plugin = null;
-	public static HashMap<UUID, SNPlayer> players = new HashMap<UUID, SNPlayer>();; // replace with actual persistence
+	public static HashMap<UUID, SNPlayer> players = new HashMap<UUID, SNPlayer>(); //TODO: replace with actual persistence MariaDB
 
 	@Override
 	public void onEnable() {

@@ -31,7 +31,12 @@ public class PluginCommands {
 			Supernaturals.players.put(snPlayer.getUuid(), snPlayer);
 			commandSender.sendMessage(ChatColor.GREEN + "You are now a Mage!");
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + commandSender.getName() + ChatColor.GREEN + " is now a Mage");
-			snPlayer.updateUI();	
+
+			// At level 1 - Mages get fireball as the first spell
+			snPlayer.setCurrentSpellNumber(0);
+			snPlayer.setCurrentSpellName("Fireball");
+			snPlayer.updateUI();
+			snPlayer.save(snPlayer.getUuid(), snPlayer);
 		} else {
 			commandSender.sendMessage(ChatColor.RED + "You are already a mage!");
 
