@@ -10,10 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scoreboard.*;
 
-import spells.Fireball;
-import spells.Heal;
-import spells.Lightning;
-import spells.PoisonMist;
+import spells.*;
 import spells.base.SNSpell;
 import supernaturals.Supernaturals;
 
@@ -68,6 +65,7 @@ public class SNPlayer {
 		spellList.put(1, new Lightning());
 		spellList.put(2, new PoisonMist());
 		spellList.put(3, new Heal());
+		spellList.put(4, new RainOfArrows());
 
 	}
 	
