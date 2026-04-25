@@ -1,7 +1,6 @@
 package commands.base;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -13,12 +12,13 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
 import supernaturals.Permission;
 import supernaturals.Supernaturals;
 
 
 public class BaseCommandExecutor implements CommandExecutor, TabCompleter {
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+	public boolean onCommand(@NonNull CommandSender sender, @NonNull Command cmd, @NonNull String commandLabel, String[] args) {
 		if(args.length == 0) {
 			PluginDescriptionFile desc = Supernaturals.plugin.getDescription();
 			
@@ -64,7 +64,7 @@ public class BaseCommandExecutor implements CommandExecutor, TabCompleter {
 		return true;
 	}
 	
-	public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {	
+	public List<String> onTabComplete(@NonNull CommandSender sender, @NonNull Command cmd, @NonNull String commandLabel, String @NonNull [] args) {
 		ArrayList<String> list = new ArrayList<String>();
 		
 		for(BaseCommand command : CommandManager.getCommands()) {

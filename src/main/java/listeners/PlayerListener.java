@@ -54,7 +54,7 @@ public class PlayerListener implements Listener {
 			return;
 		}
 
-		if (item.getType() == Material.BLAZE_ROD && item.getItemMeta().getDisplayName().contains("Magic Wand")) {
+		if (item.getType() == Material.BLAZE_ROD && Objects.requireNonNull(item.getItemMeta()).getDisplayName().contains("Magic Wand")) {
 			SNSpell spell = snPlayer.getSpellList().get(snPlayer.getCurrentSpellNumber());
 
 			if (snPlayer.getCurrentMana() >= spell.getSpellCost()) {
@@ -65,7 +65,7 @@ public class PlayerListener implements Listener {
 				snPlayer.updateUI();
 			}
 
-		} else if (item.getType() == Material.BOOK && item.getItemMeta().getDisplayName().contains("Spell Book")) {
+		} else if (item.getType() == Material.BOOK && Objects.requireNonNull(item.getItemMeta()).getDisplayName().contains("Spell Book")) {
 			player.openInventory(snPlayer.getInventory());
 		}
 		

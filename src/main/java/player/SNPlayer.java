@@ -16,7 +16,6 @@ import supernaturals.Supernaturals;
 
 /**
  * Class that represents a supernaturals player
- *
  * TODO: ORM here?
  */
 public class SNPlayer {
@@ -29,7 +28,7 @@ public class SNPlayer {
 	private int currentSpellNumber;
 	private String currentSpellName;
 	private Inventory spellInventory;
-	private Map<Integer, SNSpell> spellList = new HashMap<Integer, SNSpell>();
+	private final Map<Integer, SNSpell> spellList = new HashMap<Integer, SNSpell>();
 
 
 	/**
@@ -54,6 +53,11 @@ public class SNPlayer {
 			SNSpell spell = entry.getValue();
 			ItemStack spellIcon = new ItemStack(spell.getSpellIcon());
 			ItemMeta spellIconMeta = spellIcon.getItemMeta();
+
+			if(spellIconMeta == null) {
+				continue;
+			}
+
 			spellIconMeta.setDisplayName(spell.getSpellName() + ", " + spell.getSpellDesc());
 			spellIcon.setItemMeta(spellIconMeta);
 			spellInventory.setItem(key, spellIcon);
@@ -111,11 +115,16 @@ public class SNPlayer {
 	 */
 	public void updateUI() {
 		Scoreboard scoreboard = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
+		Objective playerInfo = scoreboard.getObjective("playerInfo");
+
 		if(scoreboard.getObjective("playerInfo") == null) {
 			scoreboard.registerNewObjective("playerInfo", Criteria.DUMMY, "");
 		}
-		
-		Objective playerInfo = scoreboard.getObjective("playerInfo");
+
+		if(playerInfo == null){
+			return;
+		}
+
 		playerInfo.setDisplaySlot(DisplaySlot.SIDEBAR);
 		playerInfo.setDisplayName("Mage - " +  ChatColor.GOLD + getCurrentSpellName());
 		Score currMana = playerInfo.getScore(ChatColor.BLUE + "Current Mana: ");

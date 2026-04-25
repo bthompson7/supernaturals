@@ -10,15 +10,12 @@ import java.util.List;
 
 
 public class RainOfArrows extends SNSpell {
-    private Vector direction;
-    private float ARROW_SPREAD = 12F;
-    private float ARROW_SPEED = 0.6F;
-    private int DISTANCE = 45;
-    private int SPELL_COST = 35;
+    private final Vector direction;
 
     public RainOfArrows(){
         setSpellName("Rain of Arrows");
         setSpellDesc("Rain arrows on the head of your enemy!");
+        int SPELL_COST = 35;
         setSpellCost(SPELL_COST);
         setSpellIcon(Material.ARROW);
         direction = new Vector();
@@ -30,9 +27,12 @@ public class RainOfArrows extends SNSpell {
         direction.setX(-cursorLocation.getX());
         direction.setY(-cursorLocation.getY());
         direction.setY(-cursorLocation.getZ());
+        int DISTANCE = 45;
         List<Location> nearbyBlocks = getLocationOfNearbyBlocks(player, DISTANCE);
 
         for(Location location : nearbyBlocks){
+            float ARROW_SPREAD = 12F;
+            float ARROW_SPEED = 0.6F;
             player.getWorld().spawnArrow(location, direction, ARROW_SPEED, ARROW_SPREAD);
         }
     }

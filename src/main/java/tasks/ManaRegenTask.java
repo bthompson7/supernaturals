@@ -4,7 +4,8 @@ import player.SNPlayer;
 import org.bukkit.ChatColor;
 
 public class ManaRegenTask implements Runnable {
-    private static int MANA_REGEN_AMOUNT = 10;
+    private static final int MANA_REGEN_AMOUNT = 10;
+
     public void run() {
         for(SNPlayer p : SNPlayer.getOnlinePlayers()) {
             int maxMana = p.getMaxMana();
@@ -16,7 +17,7 @@ public class ManaRegenTask implements Runnable {
                 p.getPlayer().sendMessage(ChatColor.GREEN + "+" + MANA_REGEN_AMOUNT + " Mana");
                 p.updateUI();
                 p.save(p.getUuid(), p);
-            }else if(diffFromMax < MANA_REGEN_AMOUNT && diffFromMax > 0) {
+            }else if(diffFromMax > 0) {
                 p.setCurrentMana(p.getCurrentMana() + diffFromMax);
                 p.getPlayer().sendMessage(ChatColor.GREEN + "+" + diffFromMax + " Mana");
                 p.updateUI();

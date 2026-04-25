@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import commands.base.BaseCommand;
-import commands.base.CommandManager;
 import player.SNPlayer;
 import recipes.Recipes;
 import supernaturals.Permission;
