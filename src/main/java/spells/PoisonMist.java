@@ -11,6 +11,7 @@ public class PoisonMist extends SNSpell {
         setSpellDesc("Cast a mist to poison your enemies!");
         setSpellCost(20);
         setSpellIcon(Material.POISONOUS_POTATO);
+        setLevelRequirement(3);
     }
 
     @Override

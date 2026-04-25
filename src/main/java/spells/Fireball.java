@@ -12,6 +12,7 @@ public class Fireball extends SNSpell {
 		setSpellDesc("Cast a fireball at your enemy!");
 		setSpellCost(1);
 		setSpellIcon(Material.FIRE_CHARGE);
+		setLevelRequirement(1);
 	}
 	
 	@Override

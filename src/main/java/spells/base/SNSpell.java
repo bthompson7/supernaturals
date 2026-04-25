@@ -18,6 +18,7 @@ import java.util.List;
 public abstract class SNSpell {
 
 	protected int spellManaCost = 10;
+	protected int levelRequirement = 1;
 	protected String spellName = "Default Spell Name";
 	protected String spellDesc = "Default Spell Description";
 	protected Material spellIcon = Material.OAK_WOOD;
@@ -72,7 +73,8 @@ public abstract class SNSpell {
 				break;
 			}
 		}
-		return lastBlock.getLocation();
+
+        return lastBlock.getLocation();
 	}
 
 	/**
@@ -126,5 +128,13 @@ public abstract class SNSpell {
 	public void setSpellName(String spellName) {
 		this.spellName = spellName;
 	}
-	
+
+	public int getLevelRequirement() {
+		return levelRequirement;
+	}
+
+	public void setLevelRequirement(int levelRequirement) {
+		this.levelRequirement = levelRequirement;
+	}
+
 }

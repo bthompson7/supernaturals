@@ -15,6 +15,7 @@ public class RainOfArrows extends SNSpell {
     public RainOfArrows(){
         setSpellName("Rain of Arrows");
         setSpellDesc("Rain arrows on the head of your enemy!");
+        setLevelRequirement(5);
         int SPELL_COST = 35;
         setSpellCost(SPELL_COST);
         setSpellIcon(Material.ARROW);

@@ -1,6 +1,7 @@
 package supernaturals;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 import listeners.WorldListener;
@@ -24,10 +25,9 @@ public class Supernaturals extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		plugin = this;
-		getLogger().info("Supernaturals has been enabled!");
 
 		// Register commands:
-		getCommand("supernaturals").setExecutor(new BaseCommandExecutor());
+		Objects.requireNonNull(getCommand("supernaturals")).setExecutor(new BaseCommandExecutor());
 		CommandManager.register(PluginCommands.class);
 
 		// Register listeners:
@@ -36,6 +36,9 @@ public class Supernaturals extends JavaPlugin {
 
 		// Register tasks:
 		Bukkit.getScheduler().runTaskTimer(this, new ManaRegenTask(), 200, 200); // Every 10 seconds
+
+		getLogger().info("Supernaturals has been enabled!");
+
 	}
 
 	@Override

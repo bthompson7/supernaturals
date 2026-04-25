@@ -11,6 +11,7 @@ public class Heal extends SNSpell {
         setSpellDesc("Heal yourself!");
         setSpellCost(15);
         setSpellIcon(Material.GOLDEN_APPLE);
+        setLevelRequirement(1);
     }
     @Override
     public void cast(Player player){

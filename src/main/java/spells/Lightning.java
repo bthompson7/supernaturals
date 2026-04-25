@@ -10,8 +10,9 @@ public class Lightning extends SNSpell {
 	public Lightning() {
 		setSpellName("Lightning");
 		setSpellDesc("Strike down your foes!");
-		setSpellCost(5);
+		setSpellCost(2);
 		setSpellIcon(Material.LIGHTNING_ROD);
+		setLevelRequirement(2);
 	}
 
 	@Override

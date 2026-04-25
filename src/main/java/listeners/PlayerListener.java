@@ -8,9 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 import net.md_5.bungee.api.ChatColor;
@@ -45,17 +43,58 @@ public class PlayerListener implements Listener {
 	}
 
 	@EventHandler
-	public void onPlayerInteract(PlayerInteractEvent event) {
+	public void onPlayerLeave(PlayerQuitEvent event){
 		Player player = event.getPlayer();
-		ItemStack item = player.getInventory().getItemInMainHand();
 		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
 
 		if (snPlayer == null) {
 			return;
 		}
 
+		snPlayer.save(snPlayer.getUuid(), snPlayer);
+	}
+
+	@EventHandler(priority=EventPriority.HIGH)
+	public void onPlayerExpChange(PlayerExpChangeEvent event){
+
+		Player player = event.getPlayer();
+		int expAmount = event.getAmount();
+		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
+		int currentExperience = snPlayer.getExperience();
+		int currentLevel = snPlayer.getCurrentLevel();
+		snPlayer.setExperience(currentExperience + expAmount);
+
+		int nextLevelExperience = snPlayer.getLevels().get(currentLevel + 1);
+
+		if(snPlayer.getExperience() >= nextLevelExperience){
+			snPlayer.setCurrentLevel(currentLevel + 1);
+			snPlayer.sendMessage(ChatColor.GOLD + "You are now level " + snPlayer.getCurrentLevel());
+
+			SNSpell spell = snPlayer.getSpells().get(snPlayer.getCurrentLevel());
+
+			if(spell != null){
+				snPlayer.getUnlockedSpells().put(snPlayer.getUnlockedSpells().size(), spell);
+				snPlayer.sendMessage(ChatColor.GOLD + "You have unlocked " + spell.getSpellName() + " !");
+				snPlayer.updateSpellInventory();
+			}
+
+		}
+		snPlayer.updateUI();
+	}
+
+	@EventHandler
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		Player player = event.getPlayer();
+		ItemStack item = player.getInventory().getItemInMainHand();
+		SNPlayer snPlayer = Supernaturals.players.get(player.getUniqueId());
+
+
+		if (snPlayer == null) {
+			return;
+		}
+
 		if (item.getType() == Material.BLAZE_ROD && Objects.requireNonNull(item.getItemMeta()).getDisplayName().contains("Magic Wand")) {
-			SNSpell spell = snPlayer.getSpellList().get(snPlayer.getCurrentSpellNumber());
+			SNSpell spell = snPlayer.getUnlockedSpells().get(snPlayer.getCurrentSpellNumber());
 
 			if (snPlayer.getCurrentMana() >= spell.getSpellCost()) {
 				spell.cast(player);
@@ -91,8 +130,8 @@ public class PlayerListener implements Listener {
 
 		int slot = event.getSlot();
 
-		if (slot < snPlayer.getSpellList().size()) {
-			String currentSpellName = snPlayer.getSpellList().get(slot).getSpellName();
+		if (slot < snPlayer.getUnlockedSpells().size()) {
+			String currentSpellName = snPlayer.getUnlockedSpells().get(slot).getSpellName();
 			snPlayer.sendMessage(ChatColor.GOLD + currentSpellName + " Selected ");
 			snPlayer.setCurrentSpellNumber(slot);
 			snPlayer.setCurrentSpellName(currentSpellName);

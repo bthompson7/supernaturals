@@ -20,20 +20,24 @@ import supernaturals.Supernaturals;
  */
 public class SNPlayer {
 
+	private UUID uuid;
 	private int currentMana;
 	private int maxMana;
-	private int currentLevel = 1;
+	private int currentLevel;
+	private int experience;
 	private String playerName;
-	private UUID uuid;
 	private int currentSpellNumber;
 	private String currentSpellName;
 	private Inventory spellInventory;
-	private final Map<Integer, SNSpell> spellList = new HashMap<Integer, SNSpell>();
 
+	private final Map<Integer, SNSpell> spells = new HashMap<>();
+
+	private final Map<Integer, SNSpell> unlockedSpells = new HashMap<>();
+	private final Map<Integer, Integer> levels = new HashMap<>();
 
 	/**
 	 * 
-	 * @param p the bukkit player
+	 * @param p the Bukkit player
 	 */
 	public SNPlayer(Player p) {
 		this.playerName = p.getName();
@@ -41,6 +45,18 @@ public class SNPlayer {
 		this.maxMana = 500;
 		this.currentMana = 450;
 		this.currentSpellNumber = 0;
+		this.experience = 0;
+		this.currentLevel = 1;
+
+		// Unlocked by default
+		unlockedSpells.put(0, new Fireball());
+		unlockedSpells.put(1, new Heal());
+
+		levels.put(1, 0);
+		for(int level = 2; level < 20; level++){
+			levels.put(level, (level * 100));
+		}
+
 		populateSpellList();
 		createSpellInventory();
 	}
@@ -48,7 +64,25 @@ public class SNPlayer {
 	private void createSpellInventory() {
 		spellInventory = Bukkit.createInventory(null, 9, "Spell List");
 
-		for (Map.Entry<Integer, SNSpell> entry : getSpellList().entrySet()) {
+		for (Map.Entry<Integer, SNSpell> entry : getUnlockedSpells().entrySet()) {
+			int key = entry.getKey();
+			SNSpell spell = entry.getValue();
+			ItemStack spellIcon = new ItemStack(spell.getSpellIcon());
+			ItemMeta spellIconMeta = spellIcon.getItemMeta();
+
+			if(spellIconMeta == null) {
+				continue;
+			}
+
+			spellIconMeta.setDisplayName(spell.getSpellName() + ", " + spell.getSpellDesc());
+			spellIcon.setItemMeta(spellIconMeta);
+			spellInventory.setItem(key, spellIcon);
+
+		}
+	}
+
+	public void updateSpellInventory(){
+		for (Map.Entry<Integer, SNSpell> entry : getUnlockedSpells().entrySet()) {
 			int key = entry.getKey();
 			SNSpell spell = entry.getValue();
 			ItemStack spellIcon = new ItemStack(spell.getSpellIcon());
@@ -65,17 +99,17 @@ public class SNPlayer {
 	}
 	
 	private void populateSpellList() {
-		spellList.put(0, new Fireball());
-		spellList.put(1, new Lightning());
-		spellList.put(2, new PoisonMist());
-		spellList.put(3, new Heal());
-		spellList.put(4, new RainOfArrows());
+		spells.put(new Fireball().getLevelRequirement(), new Fireball());
+		spells.put(new Lightning().getLevelRequirement(), new Lightning());
+		spells.put(new PoisonMist().getLevelRequirement(), new PoisonMist());
+		spells.put(new Heal().getLevelRequirement(), new Heal());
+		spells.put(new RainOfArrows().getLevelRequirement(), new RainOfArrows());
+	}
 
+	public Map<Integer, SNSpell> getUnlockedSpells() {
+		return unlockedSpells;
 	}
-	
-	public Map<Integer, SNSpell> getSpellList() {
-		return spellList;
-	}
+
 	public int getCurrentMana() {
 		return currentMana;
 	}
@@ -118,7 +152,7 @@ public class SNPlayer {
 		Objective playerInfo = scoreboard.getObjective("playerInfo");
 
 		if(scoreboard.getObjective("playerInfo") == null) {
-			scoreboard.registerNewObjective("playerInfo", Criteria.DUMMY, "");
+			playerInfo = scoreboard.registerNewObjective("playerInfo", Criteria.DUMMY, "");
 		}
 
 		if(playerInfo == null){
@@ -135,7 +169,13 @@ public class SNPlayer {
 		Score currentLevel = playerInfo.getScore(ChatColor.BLUE + "Level: ");
 		currentLevel.setScore(getCurrentLevel());
 
+		Score currentExp = playerInfo.getScore(ChatColor.BLUE + "Exp: ");
+		currentExp.setScore(getExperience());
+
 		getPlayer().setScoreboard(scoreboard);
+
+		Supernaturals.plugin.getLogger().info("updated UI: " + this.getUuid() + " " + this.getPlayer().getName());
+
 	}
 
 	public void sendMessage(String message) {
@@ -146,6 +186,9 @@ public class SNPlayer {
 	
 	public void save(UUID uuid, SNPlayer p) {
 		Supernaturals.players.put(uuid, p);
+		Supernaturals.plugin.getLogger().info("Saved Data For: " + uuid + " Player: " + p.getPlayer().getName());
+
+
 	}
 	
 	public static List<SNPlayer> getOnlinePlayers() {
@@ -207,6 +250,23 @@ public class SNPlayer {
 	public void setCurrentLevel(int currentLevel) {
 		this.currentLevel = currentLevel;
 	}
+
+	public int getExperience() {
+		return experience;
+	}
+
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+
+	public Map<Integer, Integer> getLevels() {
+		return levels;
+	}
+
+	public Map<Integer, SNSpell> getSpells() {
+		return spells;
+	}
+
 
 
 }
