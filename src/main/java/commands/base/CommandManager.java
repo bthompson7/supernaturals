@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import org.bukkit.ChatColor;
+import supernaturals.Supernaturals;
 
 public class CommandManager {
 	private static final ChatColor light = ChatColor.GREEN;
@@ -77,20 +78,19 @@ public class CommandManager {
 	public static BaseCommand getCommand(String label) {
 		for (BaseCommand command : commands.keySet()) {
 			for (String alias : command.aliases()) {
-				if(label.equalsIgnoreCase(alias)) {
+				if (label.equalsIgnoreCase(alias)) {
 					return command;
 				}
 			}
 		}
-		
-		return null;
-	}
+        return null;
+    }
 	
 	public static void execute(BaseCommand command, Object... args) {
 		try {
 			commands.get(command).invoke(commands.get(command).getDeclaringClass().getDeclaredConstructor().newInstance(), args);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Supernaturals.plugin.getLogger().severe(e.getMessage());
 		}
 	}
 }

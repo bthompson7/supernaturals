@@ -45,14 +45,17 @@ public abstract class SNSpell {
 	 */
 	public Location getCursorLocation(Player player) {
 		BlockIterator blockIterator = new BlockIterator(player, MAX_DISTANCE);
-		Block lastBlock = null;
+		Block lastBlock = blockIterator.next();
 
 		while (blockIterator.hasNext()) {
-			lastBlock = blockIterator.next();
 			if (!lastBlock.getType().isAir()) {
-				break;
-			}
+                lastBlock.getLocation();
+                break;
+            }
+
+			lastBlock = blockIterator.next();
 		}
+
 		return lastBlock.getLocation();
 	}
 
@@ -61,17 +64,18 @@ public abstract class SNSpell {
 	 *
 	 * @param player the player
 	 * @param maxDistance This is the maximum distance in blocks for the trace. Setting this value above 140 may lead to problems with unloaded chunks. A value of 0 indicates no limit
-	 * @return
+	 * @return the location of the cursor
 	 */
 	public Location getCursorLocation(Player player, int maxDistance) {
 		BlockIterator blockIterator = new BlockIterator(player, maxDistance);
-		Block lastBlock = null;
+		Block lastBlock = blockIterator.next();
 
 		while (blockIterator.hasNext()) {
-			lastBlock = blockIterator.next();
 			if (!lastBlock.getType().isAir()) {
 				break;
 			}
+
+			lastBlock = blockIterator.next();
 		}
 
         return lastBlock.getLocation();
@@ -87,7 +91,7 @@ public abstract class SNSpell {
 	public List<Location> getLocationOfNearbyBlocks(Player player, int distance){
 		List<Location> blockLocations = new ArrayList<>();
 		BlockIterator blockIterator = new BlockIterator(player, distance);
-		Block lastBlock = null;
+		Block lastBlock;
 
 		while (blockIterator.hasNext()) {
 			lastBlock = blockIterator.next();

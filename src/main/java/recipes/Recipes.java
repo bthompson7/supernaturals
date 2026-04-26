@@ -1,13 +1,9 @@
 package recipes;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 import supernaturals.Supernaturals;
 
@@ -33,11 +29,14 @@ public class Recipes {
 	public static ItemStack createWand() {
         ItemStack magicWand = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = magicWand.getItemMeta();
+
+		if(meta == null){
+			throw new RuntimeException("ItemMeta is null.");
+		}
+
         meta.setDisplayName(ChatColor.AQUA + "Magic Wand");
         magicWand.setItemMeta(meta);
         return magicWand;
-        
-        	
 	}
 	
 	/**
@@ -48,7 +47,12 @@ public class Recipes {
 	public static ItemStack createSpellBook() {
         ItemStack spellBook = new ItemStack(Material.BOOK);
         ItemMeta spellBookMeta = spellBook.getItemMeta();
-        spellBookMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Spell Book");
+
+		if(spellBookMeta == null){
+			throw new RuntimeException("ItemMeta is null.");
+		}
+
+		spellBookMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Spell Book");
         spellBook.setItemMeta(spellBookMeta);
         return spellBook;
 	}

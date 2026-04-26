@@ -31,7 +31,6 @@ public class SNPlayer {
 	private Inventory spellInventory;
 
 	private final Map<Integer, SNSpell> spells = new HashMap<>();
-
 	private final Map<Integer, SNSpell> unlockedSpells = new HashMap<>();
 	private final Map<Integer, Integer> levels = new HashMap<>();
 

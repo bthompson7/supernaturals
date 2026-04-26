@@ -1,6 +1,7 @@
 package commands.base;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -40,6 +41,12 @@ public class BaseCommandExecutor implements CommandExecutor, TabCompleter {
 		BaseCommand command = CommandManager.getCommand(args[0]);
 		Object[] commandArgs = ArrayUtils.remove(args, 0);
 
+		// Should never happen?
+		if(command == null){
+			sender.sendMessage(CommandManager.getError() + "An error occurred while running this command");
+			throw new RuntimeException("CommandManager.getCommand() returned null");
+		}
+
 		if(sender instanceof Player && !(command.player())) {
 			sender.sendMessage(CommandManager.getError() + "This command cannot be ran as a player!");
 			return true;
@@ -68,9 +75,7 @@ public class BaseCommandExecutor implements CommandExecutor, TabCompleter {
 		ArrayList<String> list = new ArrayList<String>();
 		
 		for(BaseCommand command : CommandManager.getCommands()) {
-			for(String alias : command.aliases()) {
-				list.add(alias);
-			}
+            Collections.addAll(list, command.aliases());
 		}
 		
 		return list;		

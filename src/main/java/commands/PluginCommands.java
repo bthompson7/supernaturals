@@ -13,6 +13,7 @@ import recipes.Recipes;
 import supernaturals.Permission;
 import supernaturals.Supernaturals;
 
+@SuppressWarnings("unused")
 public class PluginCommands {
 
 	@BaseCommand(aliases = { "evolve" }, desc = "Evolve into a mage!", permission = Permission.COMMAND_EVOLVE)
